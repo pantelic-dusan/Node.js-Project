@@ -25,6 +25,33 @@ class MongoDBService {
             });
         });
     }
+    insert(collection, parameters = {}) {
+        return new Promise((resolve, reject) => {
+            this.database.collection(collection).insertOne(parameters, (error) => {
+                if (error)
+                    reject();
+                resolve();
+            });
+        });
+    }
+    update(collection, findParameters, updateParameters) {
+        return new Promise((resolve, reject) => {
+            this.database.collection(collection).updateOne(findParameters, { $set: updateParameters }, (error) => {
+                if (error)
+                    reject();
+                resolve();
+            });
+        });
+    }
+    delete(collection, findParameters) {
+        return new Promise((resolve, reject) => {
+            this.database.collection(collection).deleteOne(findParameters, (error) => {
+                if (error)
+                    reject();
+                resolve();
+            });
+        });
+    }
 }
 exports.MongoDBService = MongoDBService;
 //# sourceMappingURL=mongodb.service.js.map

@@ -1,13 +1,13 @@
 let scores = [
   {
-    "name": "Player",
-    "score": 0
+    "username": "Player",
+    "score": 0,
+    "date": new Date()
   }
 ];
 
-// Radi samo kada je ime users
-db.createCollection('users');
-const scoresCollection = db.getCollection('users');
+db.createCollection('scores');
+const scoresCollection = db.getCollection('scores');
 
 for (let score of scores)
   scoresCollection.insert(score);
