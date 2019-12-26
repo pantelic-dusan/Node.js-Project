@@ -25,6 +25,7 @@ export class MongoDBService {
 
     public find (collection: string, parameters: object = {}) {
         return new Promise((resolve, reject) => {
+
             this.database.collection(collection).find(parameters)
                 .toArray((error: MongoError, data: Array<object>) => {
                     if (error)

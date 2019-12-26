@@ -15,7 +15,7 @@ export class ScoreController {
     private initRoutes () {
         this.router.get(this.path, this.getScores.bind(this))
         this.router.get(this.path + '/:username', this.getScoresByUsername.bind(this))
-        this.router.get(this.path + '/:startDate&:endDate', this.getScoresByDateRange.bind(this))
+        this.router.get(this.path + '/:startDate/:endDate', this.getScoresByDateRange.bind(this))
         this.router.post(this.path, this.postScore.bind(this))
         this.router.put(this.path + '/:_id', this.putScore.bind(this))
         this.router.delete(this.path + '/:_id', this.deleteScore.bind(this))
@@ -41,12 +41,12 @@ export class ScoreController {
 
     private async getScoresByDateRange (req: Request, res: Response) {
         await this.mongoDBService.connect()
-        
+        console.log(req.params)
         let scores = await this.mongoDBService.find('scores', 
         {
             date: {
-                $gte: req.params.startDate,
-                $lte: req.params.endDate
+                $gte: new Date(req.params.startDate),
+                $lte: new Date(req.params.endDate)
             }
         })
     

@@ -17,6 +17,7 @@ class MongoDBService {
     }
     find(collection, parameters = {}) {
         return new Promise((resolve, reject) => {
+
             this.database.collection(collection).find(parameters)
                 .toArray((error, data) => {
                 if (error)

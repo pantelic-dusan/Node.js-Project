@@ -22,14 +22,14 @@ export class App {
         })
     }
 
-    private routes(controllers: { forEach: (arg0: (controller: any) => void) => void; }) {
-        controllers.forEach(controller => {
+    private routes(controllers: any) {
+        controllers.forEach((controller: any) => {
             this.app.use('/', controller.router)
         })
     }
     
-    private middlewares(middlewares: { forEach: (arg0: (middleware: any) => void) => void; }) {
-        middlewares.forEach(middleware => {
+    private middlewares(middlewares: any) {
+        middlewares.forEach((middleware: any) => {
             this.app.use(middleware)
         })
     }

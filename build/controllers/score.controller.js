@@ -12,7 +12,7 @@ class ScoreController {
     initRoutes() {
         this.router.get(this.path, this.getScores.bind(this));
         this.router.get(this.path + '/:username', this.getScoresByUsername.bind(this));
-        this.router.get(this.path + '/:startDate&:endDate', this.getScoresByDateRange.bind(this));
+        this.router.get(this.path + '/:startDate/:endDate', this.getScoresByDateRange.bind(this));
         this.router.post(this.path, this.postScore.bind(this));
         this.router.put(this.path + '/:_id', this.putScore.bind(this));
         this.router.delete(this.path + '/:_id', this.deleteScore.bind(this));
@@ -24,7 +24,6 @@ class ScoreController {
         res.send(scores);
     }
     async getScoresByUsername(req, res) {
-        console.log('edfg');
         await this.mongoDBService.connect();
         let scores = await this.mongoDBService.find('scores', { username: req.params.username });
         this.mongoDBService.disconnect();
@@ -32,11 +31,11 @@ class ScoreController {
     }
     async getScoresByDateRange(req, res) {
         await this.mongoDBService.connect();
-        console.log('edfg');
+        console.log(req.params);
         let scores = await this.mongoDBService.find('scores', {
             date: {
-                $gte: req.params.startDate,
-                $lte: req.params.endDate
+                $gte: new Date(req.params.startDate),
+                $lte: new Date(req.params.endDate)
             }
         });
         this.mongoDBService.disconnect();
@@ -52,6 +51,7 @@ class ScoreController {
         this.mongoDBService.disconnect();
         res.send('Success');
     }
+    
     async putScore(req, res) {
         await this.mongoDBService.connect();
         await this.mongoDBService.update('scores', {
@@ -64,6 +64,7 @@ class ScoreController {
         this.mongoDBService.disconnect();
         res.send('Success');
     }
+
     async deleteScore(req, res) {
         await this.mongoDBService.connect();
         await this.mongoDBService.delete('users', { _id: parseInt(req.params._id) });

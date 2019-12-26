@@ -25,9 +25,11 @@
     "url": "https://github.com/pantelic-dusan/Node.js-Project/issues"
   },
   "homepage": "https://github.com/pantelic-dusan/Node.js-Project#readme",
-  "dependencies": {
+  "devDependencies": {
     "@types/express": "^4.17.2",
-    "@types/mongodb": "^3.3.14",
+    "@types/mongodb": "^3.3.14"
+  },
+  "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "mongodb": "^3.4.1"
