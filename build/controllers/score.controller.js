@@ -51,7 +51,6 @@ class ScoreController {
         this.mongoDBService.disconnect();
         res.send('Success');
     }
-    
     async putScore(req, res) {
         await this.mongoDBService.connect();
         await this.mongoDBService.update('scores', {
@@ -64,7 +63,6 @@ class ScoreController {
         this.mongoDBService.disconnect();
         res.send('Success');
     }
-
     async deleteScore(req, res) {
         await this.mongoDBService.connect();
         await this.mongoDBService.delete('users', { _id: parseInt(req.params._id) });

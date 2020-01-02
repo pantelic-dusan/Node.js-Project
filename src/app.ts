@@ -8,6 +8,11 @@ export class App {
 
     constructor(appInit: {port: number; controllers: any; middlewares: any;}) {
         this.app = Express()
+        // Enables CORS
+        this.app.use(function(req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            next();
+        });
         this.port = appInit.port
         this.routes(appInit.controllers)
         this.middlewares(appInit.middlewares)

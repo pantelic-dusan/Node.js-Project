@@ -4,6 +4,11 @@ const Express = require("express");
 class App {
     constructor(appInit) {
         this.app = Express();
+        // Enables CORS
+        this.app.use(function (req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            next();
+        });
         this.port = appInit.port;
         this.routes(appInit.controllers);
         this.middlewares(appInit.middlewares);
@@ -16,12 +21,12 @@ class App {
         });
     }
     routes(controllers) {
-        controllers.forEach(controller => {
+        controllers.forEach((controller) => {
             this.app.use('/', controller.router);
         });
     }
     middlewares(middlewares) {
-        middlewares.forEach(middleware => {
+        middlewares.forEach((middleware) => {
             this.app.use(middleware);
         });
     }
