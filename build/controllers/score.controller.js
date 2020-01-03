@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Express = require("express");
 const mongodb_service_1 = require("../services/mongodb.service");
+const mongodb_1 = require("mongodb");
 class ScoreController {
     constructor() {
         this.path = '/scores';
@@ -45,7 +46,7 @@ class ScoreController {
         await this.mongoDBService.connect();
         await this.mongoDBService.insert('scores', {
             username: req.body.username,
-            score: req.body.score,
+            score: parseInt(req.body.score),
             date: new Date()
         });
         this.mongoDBService.disconnect();
@@ -54,10 +55,10 @@ class ScoreController {
     async putScore(req, res) {
         await this.mongoDBService.connect();
         await this.mongoDBService.update('scores', {
-            _id: parseInt(req.params._id)
+            _id: new mongodb_1.ObjectId(req.params._id)
         }, {
             username: req.body.username,
-            score: req.body.score,
+            score: parseInt(req.body.score),
             date: new Date()
         });
         this.mongoDBService.disconnect();
@@ -65,7 +66,7 @@ class ScoreController {
     }
     async deleteScore(req, res) {
         await this.mongoDBService.connect();
-        await this.mongoDBService.delete('users', { _id: parseInt(req.params._id) });
+        await this.mongoDBService.delete('users', { _id: new mongodb_1.ObjectId(req.params._id) });
         this.mongoDBService.disconnect();
         res.send('Success');
     }

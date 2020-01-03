@@ -27,6 +27,7 @@ export class MongoDBService {
         return new Promise((resolve, reject) => {
 
             this.database.collection(collection).find(parameters)
+                .sort({score: -1, date: -1})
                 .toArray((error: MongoError, data: Array<object>) => {
                     if (error)
                         reject()

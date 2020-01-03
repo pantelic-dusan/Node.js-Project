@@ -7,11 +7,12 @@ class App {
         // Enables CORS
         this.app.use(function (req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
             next();
         });
         this.port = appInit.port;
-        this.routes(appInit.controllers);
         this.middlewares(appInit.middlewares);
+        this.routes(appInit.controllers);
     }
     start() {
         this.app.listen(this.port, () => {

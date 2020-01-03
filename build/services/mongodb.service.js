@@ -18,6 +18,7 @@ class MongoDBService {
     find(collection, parameters = {}) {
         return new Promise((resolve, reject) => {
             this.database.collection(collection).find(parameters)
+                .sort({ score: -1, date: -1 })
                 .toArray((error, data) => {
                 if (error)
                     reject();

@@ -1,6 +1,7 @@
 import * as Express from 'express'
 import { Request, Response } from 'express'
 import { MongoDBService } from '../services/mongodb.service'
+import { ObjectId } from 'mongodb'
 
 export class ScoreController {
     public path: string = '/scores'
@@ -56,10 +57,10 @@ export class ScoreController {
 
     private async postScore (req: Request, res: Response) {
         await this.mongoDBService.connect()
-    
+
         await this.mongoDBService.insert('scores', {
             username: req.body.username, 
-            score: req.body.score,
+            score: parseInt(req.body.score),
             date: new Date()
         })
     
@@ -72,11 +73,11 @@ export class ScoreController {
     
         await this.mongoDBService.update('scores', 
         {
-            _id: parseInt(req.params._id)
+            _id: new ObjectId(req.params._id)
         },
         {
             username: req.body.username, 
-            score: req.body.score,
+            score: parseInt(req.body.score),
             date: new Date()
         })
     
@@ -85,9 +86,10 @@ export class ScoreController {
     }
 
     private async deleteScore (req: Request, res: Response) {
+        
         await this.mongoDBService.connect()
 
-        await this.mongoDBService.delete('users', { _id: parseInt(req.params._id)})
+        await this.mongoDBService.delete('users', { _id: new ObjectId(req.params._id)})
 
         this.mongoDBService.disconnect()
         res.send('Success')
